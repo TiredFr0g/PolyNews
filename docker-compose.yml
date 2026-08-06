@@ -1,0 +1,75 @@
+services:
+  postgres:
+    image: ankane/pgvector:v0.5.1
+    container_name: feed_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      knowledge_net:
+        ipv4_address: 10.5.0.5
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: feed_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - knowledge_net
+
+  ingest_worker:
+    build: ./services/worker
+    container_name: feed_ingest_worker
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    networks:
+      - knowledge_net
+    
+  web:
+    build: ./services/web
+    container_name: feed_web
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - ./services/web:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - knowledge_net
+
+  frontend:
+    build: ./services/frontend
+    container_name: feed_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./services/frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - knowledge_net
+
+volumes:
+  postgres_data:
+
+networks:
+  knowledge_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16

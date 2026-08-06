@@ -1,0 +1,18 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE IF NOT EXISTS articles (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    url TEXT UNIQUE NOT NULL,
+    source VARCHAR(50) NOT NULL,
+    score INTEGER DEFAULT 0,  -- Added the score column
+    content TEXT,
+    embedding vector(384),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

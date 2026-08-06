@@ -1,0 +1,57 @@
+.editorial-header {
+  margin-bottom: 2rem;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0 1.5rem;
+}
+
+.logo {
+  font-size: 2.5rem;
+  letter-spacing: -1px;
+}
+
+.logo span {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-email {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.search-bar {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.search-bar input {
+  padding-left: 2.5rem;
+  border-radius: 20px;
+  background-color: transparent;
+  border: 1px solid var(--text-primary);
+}
+
+.search-bar input:focus {
+  background-color: white;
+}

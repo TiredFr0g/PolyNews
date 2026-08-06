@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --bg-primary: #F9F8F6;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --border-subtle: #E5E5E0;
+  --accent-color: #C84B31;
+  
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  
+  --transition: all 0.2s ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.editorial-divider {
+  height: 1px;
+  background-color: var(--text-primary);
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  background-color: #a63e28;
+}
+
+.btn-outline {
+  border: 1px solid var(--text-primary);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.btn-outline:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+input {
+  font-family: var(--font-sans);
+  padding: 0.75rem;
+  border: 1px solid var(--border-subtle);
+  background: white;
+  width: 100%;
+  border-radius: 4px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
