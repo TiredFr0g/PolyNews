@@ -32,9 +32,17 @@ def fetch_og_image(url):
         og_image = soup.find("meta", property="og:image")
         if og_image and og_image.get("content"):
             return og_image["content"]
+            
+        twitter_image = soup.find("meta", attrs={"name": "twitter:image"})
+        if twitter_image and twitter_image.get("content"):
+            return twitter_image["content"]
+            
     except Exception as e:
         print(f"Image fetch error for {url}: {e}")
-    return None
+        
+    import hashlib
+    url_hash = hashlib.md5(url.encode()).hexdigest()
+    return f"https://picsum.photos/seed/{url_hash}/800/400"
 
 def save_to_db(stories):
     db_url = os.environ.get(

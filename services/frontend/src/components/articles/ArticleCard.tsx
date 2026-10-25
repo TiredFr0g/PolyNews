@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Article } from '../../services/api';
 
 interface ArticleCardProps {
@@ -7,6 +7,11 @@ interface ArticleCardProps {
 }
 
 export const ArticleCard: React.FC<ArticleCardProps> = ({ article, onFindSimilar }) => {
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  const displayUrl = article.image_url || `https://picsum.photos/seed/${article.id}/800/400`;
+
   return (
     <article className="article-card">
       {article.similarity && (
@@ -14,8 +19,19 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article, onFindSimilar
           Match: {(article.similarity * 100).toFixed(1)}%
         </div>
       )}
-      {article.image_url ? (
-        <img className="article-image" src={article.image_url} alt="" loading="lazy" />
+      {!imgError ? (
+        <>
+          {!imgLoaded && <div className="article-image-placeholder" />}
+          <img 
+            className="article-image" 
+            style={imgLoaded ? {} : { opacity: 0, position: 'absolute', pointerEvents: 'none' }}
+            src={displayUrl} 
+            alt="" 
+            loading="lazy" 
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgError(true)}
+          />
+        </>
       ) : (
         <div className="article-image-placeholder" />
       )}
